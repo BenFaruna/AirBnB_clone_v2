@@ -63,5 +63,5 @@ class FileStorage:
             cls_ = obj.to_dict()["__class__"]
             id_ = obj.id
             key = cls_ + "." + id_
-            del (FileStorage.__objects[key])
+            FileStorage.__objects.pop(key)
             self.save()
