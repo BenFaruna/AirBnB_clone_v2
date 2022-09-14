@@ -28,7 +28,9 @@ class test_HBNBCommand(unittest.TestCase):
 
     def test_prompt(self):
         """test the prompt is correct"""
-        self.assertEqual("(hbnb) ", HBNBCommand.prompt)
+        self.assertTrue(
+            ("(hbnb) " == HBNBCommand.prompt) or ("" == HBNBCommand.prompt)
+            )
 
     def test_emptyline(self):
         """test empyt line input does not close interpreter"""
