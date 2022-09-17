@@ -3,6 +3,7 @@
 import os
 
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from sqlalchemy.orm import relationship
 
 from models.base_model import BaseModel, Base
 
@@ -23,6 +24,7 @@ class Place(BaseModel, Base):
         price_by_night = Column(Float, default=0, nullable=False)
         latitude = Column(Float, nullable=False)
         longitude = Column(Float, nullable=False)
+        reviews = relationship('Review', backref='place', cascade='delete')
     else:
         city_id = ""
         user_id = ""
@@ -35,3 +37,12 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
+
+        @property
+        def reviews(self):
+            review_dict = models.storage.all(Review)
+            review_list = []
+            for review in review_dict.values():
+                if review.place_id == self.id:
+                    review_list.append(review)
+            return review
