@@ -21,7 +21,7 @@ def do_pack():
         print("Packing web_static to {}".format(path_name))
         local("tar -cvzf {} web_static/".format(path_name))
         return path_name
-    except:
+    except Exception:
         return None
 
 
@@ -43,12 +43,13 @@ def do_deploy(archive_path):
             run("ln -s {}{}/ /data/web_static/current".format(
                 not_path, not_ext))
             return True
-        except:
+        except Exception:
             print("f")
             return False
     else:
         print("x")
         return False
+
 
 def deploy():
     """full deploy
