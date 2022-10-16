@@ -28,13 +28,21 @@ def cities_by_states():
 @app.route("/states", strict_slashes=False)
 def states_list():
     """routing for state list"""
-    return render_template("9-states.html", states=None, cities=None)
+    states = storage.all(State).values()
+    return render_template("9-states.html", states=states, cities={})
 
 
 @app.route("/states/<id>", strict_slashes=False)
 def state_with_city(id):
     """check for cities under a state using it's id"""
-    pass
+    states = storage.all(State).values()
+    cities = storage.all(City).values()
+
+    for state in states:
+        if state.id == id:
+            return render_template("9-states.html",
+                                   states=[state], cities=cities)
+    return render_template("9-states.html", states={}, cities={})
 
 
 if __name__ == "__main__":
